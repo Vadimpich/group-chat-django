@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load cache %}
+{% block title %}
+    LocalMessages
+{% endblock title %}
+{% block content %}
+    {% if not request.user.is_authenticated %}
+        <h1 class="display-4 text-center pt-5">Войдите для доступа в чат!</h1>
+    {% else %}
+        <div class="row justify-content-center">
+            <div class="col-md-6 p-5">
+                <div class="card">
+                    <div class="card-body" style="max-height: 600px;
+                                                  margin-bottom: 10px;
+                                                  overflow-y:scroll;">
+                        <div id="messages-container">
+                            {% include 'messages_partial.html' %}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-md-8 offset-md-2">
+                            <form method="post"
+                                  enctype="multipart/form-data"
+                                  autocomplete="off"
+                                  action={% url "index" %}
+                            >
+                                <div class="form-group row my-3">
+                                    <input type="hidden"
+                                           name="csrfmiddlewaretoken"
+                                           value="">
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                        {{ field }}
+                                    {% endfor %}
+                                    <div class="col-md-6 offset-md-5 pt-3">
+                                        <button type="submit"
+                                                class="btn btn-primary">
+                                            Отправить
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}

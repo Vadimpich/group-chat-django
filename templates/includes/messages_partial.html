@@ -1,0 +1,6 @@
+{% for message in messages %}
+    {% include "includes/message.html" %}
+    {% if not forloop.last %}
+        <hr/>
+    {% endif %}
+{% endfor %}

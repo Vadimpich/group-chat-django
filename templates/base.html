@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<link>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<link rel="icon" href="{% static 'img/fav.ico' %}" type="image">
+
+<link rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'img/fav-32x32.png' %}">
+<link rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'img/fav-16x16.png' %}">
+<meta name="msapplication-TileColor" content="#000">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+<title>
+    {% block title %}{% endblock %}
+</title>
+</head>
+<body>
+{% include 'includes/header.html' %}
+<main>
+    {% block content %} Контент не подвезли :( {% endblock %}
+</main>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script>
+        $(document).ready(function () {
+            function updateMessages() {
+                $.get("{% url 'update_messages' %}", function (data) {
+                    $("#messages-container").html(data);
+                });
+            }
+            setInterval(updateMessages, 1000);
+        });
+    </script>
+</body>
+</html>
